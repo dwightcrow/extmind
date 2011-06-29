@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>{%block title%}{%endblock%}</title>
+    <!-- assuming we need these universally -->
+    <script type="text/javascript" 
+	      src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js">
+    </script>
+
+    <link rel="stylesheet" href="/static/base.css" />
+    <!-- headInclude comes after so we can override above classes-->
+    {%block headInclude %}
+    {% endblock %}
+  </head>
+
+  <body>
+    <div id="topsection">
+      <div class='page_content'>
+	<a href='{% url learn.views.queue %}'>
+	  <!--<img id='logo' src='/static/logo_white.png'/>-->
+	  </a>
+	<div class='navigation'>
+	  <a href="{% url learn.views.session %}">doSession</a>
+	  <a href="{% url learn.views.concepts %}">myConcepts</a>
+<!--	  <a href="{ url app.views.logout }">Logout</a> -->
+	  </div>
+	</div>
+      </div>
+    <div id="header">
+      
+      </div>
+    <!-- end #header -->
+    <div class='page_content'>
+      <div id="content" style="margin:10px;">
+	{% block content %}
+	{% endblock %}
+	</div>
+      </div>
+    </body>
+</html>

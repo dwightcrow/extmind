@@ -1,17 +1,23 @@
+from extmind import settings
 from django.conf.urls.defaults import *
+from django.contrib import admin
 
 # Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
+from django.contrib import admin
+admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Example:
-    # (r'^extmind/', include('extmind.foo.urls')),
-
-    # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
-    # to INSTALLED_APPS to enable admin documentation:
-    # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
-    # (r'^admin/', include(admin.site.urls)),
+    (r'^$', 'learn.views.queue'),
+    (r'^queue/$', 'learn.views.queue'),
+    (r'^concepts/$', 'learn.views.concepts'),
+    (r'^session/$', 'learn.views.session'),
+    (r'^calendar/$', 'learn.views.calendar'),
+    url(r'^admin/', include(admin.site.urls)),
 )
+
+# need to change for production XXX_DWIGHT
+if True:
+    urlpatterns += patterns('',
+        (r'^static/(?P<path>.*)$', 'django.views.static.serve', 
+         {'document_root': '/home/dwight/extmind/learn/static/'}), 
+    )
