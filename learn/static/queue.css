@@ -1,0 +1,36 @@
+#queueWrapper{
+margin:180px auto;
+width:310px;
+height:100px;
+}
+
+#queueForm{
+text-align:center;
+}
+
+#conceptTitle{
+margin-bottom:5px;
+color:#333;
+font-size:120%;
+line-height:1.0em;
+}
+
+#queueText{
+font-size:120%;
+line-height:1.0em;
+color:#555;
+}
+
+#showLastConcept{
+float:right;
+position:absolute;
+bottom:64px;
+right:64px;
+background:#000;
+border-radius:15px;
+padding:30px;
+opacity: .85;
+display:none;
+color:#fff;
+font-size:100%;
+}

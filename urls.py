@@ -11,7 +11,11 @@ urlpatterns = patterns('',
     (r'^queue/$', 'learn.views.queue'),
     (r'^concepts/$', 'learn.views.concepts'),
     (r'^session/$', 'learn.views.session'),
-    (r'^calendar/$', 'learn.views.calendar'),
+    (r'^saveText/(?P<conceptId>.*)$', 'learn.views.saveText'),
+    (r'^settings/$', 'learn.views.settings'),
+    (r'^register/$', 'learn.views.register'),
+    (r'^login/$', 'django.contrib.auth.views.login'),
+    (r'^logout/$', 'learn.views.logout'),
     url(r'^admin/', include(admin.site.urls)),
 )
 

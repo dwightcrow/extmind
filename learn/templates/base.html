@@ -15,27 +15,23 @@
   </head>
 
   <body>
-    <div id="topsection">
-      <div class='page_content'>
-	<a href='{% url learn.views.queue %}'>
-	  <!--<img id='logo' src='/static/logo_white.png'/>-->
-	  </a>
-	<div class='navigation'>
-	  <a href="{% url learn.views.session %}">doSession</a>
-	  <a href="{% url learn.views.concepts %}">myConcepts</a>
-<!--	  <a href="{ url app.views.logout }">Logout</a> -->
-	  </div>
-	</div>
-      </div>
-    <div id="header">
-      
-      </div>
-    <!-- end #header -->
     <div class='page_content'>
-      <div id="content" style="margin:10px;">
-	{% block content %}
-	{% endblock %}
-	</div>
+
+	 <div id="topsection">
+		<div class='navigation'>
+	  		<a href="{% url learn.views.queue %}">home</a>
+	  		<a href="{% url learn.views.session %}">doSession</a>
+	  		<a href="{% url learn.views.concepts %}">myConcepts</a>
+	  		<a href="{% url learn.views.settings %}">settings</a>
+	  		<a href="{% url learn.views.logout %}">logOut</a>
+		</div>
       </div>
-    </body>
+    
+      <div id="content" style="margin:10px;">
+		{% block content %}
+		{% endblock %}
+	  </div>
+
+    </div>
+  </body>
 </html>

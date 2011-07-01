@@ -1,0 +1,47 @@
+.conceptBubble, .conceptBubbleFull{
+background:#fff5e8;
+border-radius:15px;
+border:solid;
+border-color:#222;
+margin: 20px 0;
+padding: 20px;
+width:100%;
+}
+
+.conceptBubble{
+height:250px;
+}
+
+.conceptBubbleFull{
+max-height:300px;
+min-height:60px;
+}
+
+.conceptBubbleLeft{
+float:left;
+width:190px;
+}
+
+.conceptBubbleRight{
+float:right;
+display:inline;
+width:630px;
+}
+
+.inputText{
+width:610px;
+height:240px;
+}
+
+.title{
+font-weight:700;
+}
+
+.date{
+font-weight:400;
+color:#444;
+}
+
+.saveButton{
+margin: 30px 0;
+}

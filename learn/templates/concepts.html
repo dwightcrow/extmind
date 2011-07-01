@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{%block headInclude %}
+<link rel="stylesheet" href="/static/session.css" />
+{% endblock %}
+
+
+{% block content %}
+
+{% for c in concepts %}
+<div class='conceptBubbleFull'>
+	<div class='conceptBubbleLeft'>
+		<div class='title'>{{c.name}}</div> 
+		<div class='date'>{{c.date}}</div>
+	</div>
+	
+	<div class='conceptBubbleRight'>
+		{{c.text}}
+	</div>
+</div>
+{%endfor%}
+
+{% endblock %}

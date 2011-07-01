@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block headInclude %}
+<style type="text/css"> 
+.page_content{ width: 700px; margin:auto; border-radius:15px;}
+#registerForm{ position:relative; top:20px; left:20px; float:left;}
+#logleft{ float:left; display:inline; width:400px;}
+#logright{float:left; display:inline; position:relative; top:25px; width:250px; color:#777;}
+a{ text-decoration:none; color: #000;}
+</style> 
+{% endblock %}
+
+
+
+
+
+
+
+
+{% block content %}
+<div class='page_content' style='height:300px;background:#fff; position:relative; top:20px;'>
+<div id='logleft'>
+<form id='registerForm' method="POST" action="{% url learn.views.register %}">
+	{% csrf_token %}
+	{{form.as_p}}
+	<input type="submit" value="register" />
+</form>
+</div>
+<div id='logright'>
+	<b style='color:#555;'>Join Now</b> <br>
+	Um ... or dont! You should probably be outside or playing with your kids or girlfriend
+	instead of on another stupid internet site
+	
+</div>
+
+</div>
+
+
+
+{% endblock %}

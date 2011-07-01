@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{%block headInclude %}
+<link rel="stylesheet" href="/static/session.css" />
+{% endblock %}
+
+
+{% block content %}
+
+{% for c in concepts %}
+<div class='conceptBubble' id='conceptBubble{{c.id}}'>
+	<div class='conceptBubbleLeft'>
+		<div class='title'>{{c.name}}</div> 
+		<div class='date'>{{c.date}}</div>
+		<input type='button' value='Save' class='saveButton' id='saveButton{{c.id}}'/>
+	</div>
+	
+	<div class='conceptBubbleRight'>
+		<textarea class='inputText' id='textArea{{c.id}}'>
+			
+		</textarea>
+	</div>
+</div>
+<!-- submits entry and dissappears text! w00t productivity-->
+<script>
+$("#saveButton{{c.id}}").click(function() {
+	console.log( 'click saveButton{{c.id}}');
+	var postdata = 'text=' + $("#textArea{{c.id}}").val();
+    console.log( postdata );
+  	
+  	$.ajax({
+    type: "POST",
+    url: "{% url learn.views.saveText conceptId=c.id %}",
+    data: postdata,
+    success: function(data) {
+    	$("#conceptBubble{{c.id}}").hide( 'slow' );
+    },
+    error: function(request, status, exception) {
+    	alert(status + " " + exception);
+    },
+   });
+});
+	
+</script>
+
+{%endfor%}
+
+{% endblock %}

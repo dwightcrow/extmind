@@ -10,3 +10,26 @@ background: #EdbE82;
 width: 960px;
 margin: 0 auto;
 }
+
+#topsection{
+height: 50px; 
+}
+
+#topsection a{
+color: #ffffff;
+text-decoration: none;
+}
+
+.navigation{
+float:right;
+margin: 14px 20px 0 0;
+font-size:90%;
+font-weight:700;
+line-height:1.0em;
+}
+.navigation a{
+margin: 0 0 0 10px;
+}
+
+
+

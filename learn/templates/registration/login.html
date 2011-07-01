@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block headInclude %}
+<style type="text/css"> 
+.page_content{ width: 700px; margin:auto; border-radius:15px;}
+#loginform{ position:relative; top:20px; left:20px; float:left;}
+#logleft{ float:left; display:inline; width:400px;}
+#logright{float:left; display:inline; position:relative; top:25px;}
+a{ text-decoration:none; color: #000;}
+</style> 
+{% endblock %}
+
+
+{% block content %}
+
+<div class='page_content' style='height:150px;background:#fff; position:relative; top:20px;'>
+
+<div id='logleft'>
+<!--{% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}-->
+{% if next != "" %} 
+<!-- This is kind of a hack, to check if the user clicked "login" directly -->
+  <p><font color='red'>
+    Please login to do that!<br />
+  </font></p>
+{% endif %}
+<form id='loginform' method="post" action="{% url django.contrib.auth.views.login %}">
+  {% csrf_token %}
+  <table>
+    <tr>
+        <td>{{ form.username.label_tag }}</td>
+        <td>{{ form.username }}</td>
+    </tr>
+    <tr>
+        <td>{{ form.password.label_tag }}</td>
+        <td>{{ form.password }}</td>
+    </tr>
+  </table>
+  
+  <input type="submit" value="login" />
+  <input type="hidden" name="next" value="/queue/" />
+</form>
+
+</div>
+<div id='logright'>
+	<b>Not a member yet?</b> <a href="{% url learn.views.register %}">Register!</a>
+	
+</div>
+
+</div>
+{% endblock %}
