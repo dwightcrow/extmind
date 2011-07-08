@@ -12,8 +12,13 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 from django.contrib.auth.models import User
-from extmind.learn.models import Concept 
+from extmind.learn.models import Concept, Goal 
 from extmind.learn.forms import RegistrationForm, LoginForm
+
+import datetime
+
+daysOfWeek = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
+                         "Saturday", "Sunday" )
 
 def queue( request ):
     if not request.user.is_authenticated():
@@ -38,6 +43,19 @@ def concepts( request ):
 
 def session( request ):
     c = {}
+    weekday = daysOfWeek[ datetime.date.today().weekday() ].upper()
+    numGoalPerDay = Goal.objects.filter( user=request.user).filter( day=weekday ).count()
+    if numGoalPerDay == 0:
+        goal = Goal()
+        goal.day = d.upper()
+        goal.user = request.user
+        goal.length = int(0)
+        goal.save()
+    elif numGoalPerDay == 1:
+        goal = Goal.objects.filter( user=request.user).filter( day=weekday ).all()[0]
+    else:
+        assert 0, 'weird num goals %d' % numGoalPerDay
+    c['goal'] = goal
     c['concepts'] = Concept.objects.filter( user=request.user ).filter(text="").order_by('-date').all()
     return render_to_response( 'session.html', c,
                                context_instance=RequestContext(request) )
@@ -45,14 +63,34 @@ def session( request ):
 def saveText( request, conceptId ):
     concept = Concept.objects.get( id=conceptId )
     concept.text = request.POST['text']
+    concept.date = datetime.datetime.now()
     concept.save()
     return HttpResponse( "Success");
 
 def settings( request ):
     c={}
+    c['days_of_week'] = daysOfWeek
     return render_to_response( 'settings.html', c,
                                context_instance=RequestContext(request) )
 
+@csrf_exempt
+def saveSettings( request ):
+    for d in daysOfWeek:
+        assert d.upper() in request.POST
+        length = request.POST[d.upper()]
+        numGoalPerDay = Goal.objects.filter( user=request.user).filter( day=d.upper() ).count()
+        if numGoalPerDay == 0:
+            goal = Goal()
+            goal.day = d.upper()
+            goal.user = request.user
+            goal.length = int(length)
+        elif numGoalPerDay == 1:
+            goal = Goal.objects.filter( user=request.user).filter( day=d.upper() ).all()[0]
+            goal.length = int(length)
+        else:
+            assert 0, "wrong number of goals: %d" % numGoalPerDay
+        goal.save()
+    return HttpResponse( "Success ")
 
 def register(request):
     if request.method == 'POST': # If the form has been submitted...
@@ -62,6 +100,7 @@ def register(request):
             form.save()
             user = authenticate(username=form.cleaned_data['username'], 
                                 password=form.cleaned_data['password1'])
+            # I should add null goals here - get rid of ifs...
             django_login(request, user)
             return HttpResponseRedirect(reverse(queue)) # Redirect after POST
     else:

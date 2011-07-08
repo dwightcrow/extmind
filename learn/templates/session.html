@@ -6,7 +6,7 @@
 
 
 {% block content %}
-
+<div id='timer'></div>
 {% for c in concepts %}
 <div class='conceptBubble' id='conceptBubble{{c.id}}'>
 	<div class='conceptBubbleLeft'>
@@ -23,6 +23,7 @@
 </div>
 <!-- submits entry and dissappears text! w00t productivity-->
 <script>
+console.log("trying to make for {{c.id}}");
 $("#saveButton{{c.id}}").click(function() {
 	console.log( 'click saveButton{{c.id}}');
 	var postdata = 'text=' + $("#textArea{{c.id}}").val();
@@ -40,7 +41,42 @@ $("#saveButton{{c.id}}").click(function() {
     },
    });
 });
-	
+
+var clockGo = true;
+var min = {{goal.length}};
+var sec = 1;
+function timer(){
+	sec -= 1;
+	if(sec == -1){
+		min-=1;
+		sec = 59;
+	}
+	if(min==-1){
+		// do concluding stuff
+		return;
+	}
+	var txt = "";
+	if( min < 10 ){
+		txt += ("0" + min + ":") 
+	} else{
+		txt += (min + ":")
+	}
+	if( sec < 10 ){
+		txt+=("0"+sec)
+	} else{
+		txt+=sec
+	}
+	$("#timer").html( txt );
+	if( clockGo == true ){
+		setTimeout( "timer()", 1000 );
+	}
+}
+
+$(document).ready(function() {
+	console.log( 'doing doc ready');
+	timer();
+});
+
 </script>
 
 {%endfor%}

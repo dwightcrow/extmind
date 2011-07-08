@@ -1,0 +1,24 @@
+#calendarBlock{
+width:960px;
+height:200px;
+}
+
+.perDaySetting{
+width:120px;
+margin:30px 10px 40px 0;
+float:left;
+}
+
+.dayTitle{
+margin: 0 0 2px 4px;
+font-size:100%;
+line-height:1.0em;
+font-weight:700;
+}
+
+#saveButton{
+margin:20px 0 0 5px;
+font-size:120%;
+line-height:1.0em;
+font-weight:700;
+}
