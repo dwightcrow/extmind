@@ -47,7 +47,7 @@ def session( request ):
     numGoalPerDay = Goal.objects.filter( user=request.user).filter( day=weekday ).count()
     if numGoalPerDay == 0:
         goal = Goal()
-        goal.day = d.upper()
+        goal.day = weekday
         goal.user = request.user
         goal.length = int(0)
         goal.save()
