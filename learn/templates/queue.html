@@ -14,7 +14,9 @@
 	<input id='queueText' type='text' name="concept"/>
 </form>
 </div>
-
+<script>
+$(document).ready(function() { $("#queueText").focus(); });
+</script>
 {%if showConcept %}
 <div id='showLastConcept'>{{submittedConcept}} submitted</div>
 <script>
