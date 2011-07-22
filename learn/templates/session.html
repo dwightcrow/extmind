@@ -20,9 +20,7 @@ You've completed all your scheduled conceptual growth!
 	</div>
 	
 	<div class='conceptBubbleRight'>
-		<textarea class='inputText' id='textArea{{c.id}}'>
-			
-		</textarea>
+		<textarea class='inputText' id='textArea{{c.id}}'></textarea>
 	</div>
 </div>
 <!-- submits entry and dissappears text! w00t productivity-->
@@ -84,7 +82,9 @@ $(document).ready(function() {
 	console.log( 'doing doc ready');
 	timer();
 });
-
+// set first one in focus
+$('#textArea{{first.id}}').focus();
+console.log( '{{first.id}}');
 </script>
 {%endif%}
 

@@ -61,6 +61,7 @@ def session( request ):
         c['noConcepts'] = True
     else:
         c['noConcepts'] = False
+    c['first'] = c['concepts'][0]
     return render_to_response( 'session.html', c,
                                context_instance=RequestContext(request) )
 @csrf_exempt
