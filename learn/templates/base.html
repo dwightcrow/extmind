@@ -15,9 +15,7 @@
   </head>
 
   <body>
-    <div class='page_content'>
-
-	 <div id="topsection">
+  		 <div id="topsection">
 		<div class='navigation'>
 	  		<a href="{% url learn.views.queue %}">home</a>
 	  		<a href="{% url learn.views.session %}">doSession</a>
@@ -26,6 +24,9 @@
 	  		<a href="{% url learn.views.logout %}">logOut</a>
 		</div>
       </div>
+    <div class='page_content'>
+
+
     
       <div id="content" style="margin:10px;">
 		{% block content %}

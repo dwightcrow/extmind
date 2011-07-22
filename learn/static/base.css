@@ -3,16 +3,19 @@ font-family:Arial,Helvetica,sans-serif;
 margin:0;
 padding:0;
 line-height: 1.1em;
-background: #EdbE82;
+/*background: #EdbE82;*/
+background:#fafafa;
 }
 
 .page_content{
 width: 960px;
 margin: 0 auto;
+
 }
 
 #topsection{
-height: 50px; 
+height: 40px; 
+background:#222;
 }
 
 #topsection a{

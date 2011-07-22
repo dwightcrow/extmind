@@ -1,8 +1,8 @@
 .conceptBubble, .conceptBubbleFull{
-background:#fff5e8;
-border-radius:15px;
+background:#fafafa;
+/*border-radius:15px;*/
 border:solid;
-border-color:#222;
+border-color:#e3e9ff #fff #e3e9ff #fff;
 margin: 20px 0;
 padding: 20px;
 width:100%;

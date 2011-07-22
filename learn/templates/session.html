@@ -7,6 +7,10 @@
 
 {% block content %}
 <div id='timer'></div>
+{%if noConcepts %}
+<br>
+You've completed all your scheduled conceptual growth!
+{%endif%}
 {% for c in concepts %}
 <div class='conceptBubble' id='conceptBubble{{c.id}}'>
 	<div class='conceptBubbleLeft'>
@@ -41,7 +45,11 @@ $("#saveButton{{c.id}}").click(function() {
     },
    });
 });
+</script>
+{%endfor%}
 
+{% if not noConcepts %}
+<script>
 var clockGo = true;
 var min = {{goal.length}};
 var sec = 1;
@@ -78,7 +86,6 @@ $(document).ready(function() {
 });
 
 </script>
-
-{%endfor%}
+{%endif%}
 
 {% endblock %}

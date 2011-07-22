@@ -57,6 +57,10 @@ def session( request ):
         assert 0, 'weird num goals %d' % numGoalPerDay
     c['goal'] = goal
     c['concepts'] = Concept.objects.filter( user=request.user ).filter(text="").order_by('-date').all()
+    if Concept.objects.filter( user=request.user ).filter(text="").order_by('-date').count() == 0:
+        c['noConcepts'] = True
+    else:
+        c['noConcepts'] = False
     return render_to_response( 'session.html', c,
                                context_instance=RequestContext(request) )
 @csrf_exempt
@@ -67,9 +71,25 @@ def saveText( request, conceptId ):
     concept.save()
     return HttpResponse( "Success");
 
+class wrapper():
+    def __init__(self, day, minutes):
+        self.day = day
+        self.minutes = minutes
+
 def settings( request ):
     c={}
-    c['days_of_week'] = daysOfWeek
+    prevSettings = []
+    for d in daysOfWeek:
+        numGoalPerDay = Goal.objects.filter( user=request.user).filter( day=d.upper() ).count()
+        if numGoalPerDay == 0:
+            prevSettings.append( wrapper(d,0) )
+        elif numGoalPerDay == 1:
+            goal = Goal.objects.filter( user=request.user).filter( day=d.upper() ).all()[0]
+            prevSettings.append( wrapper(d, goal.length) )
+        else:
+            assert 0, "wrong number of goals: %d" % numGoalPerDay
+    assert len( prevSettings ) == 7
+    c['prevSettings'] = prevSettings
     return render_to_response( 'settings.html', c,
                                context_instance=RequestContext(request) )
 
