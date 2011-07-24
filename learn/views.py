@@ -105,9 +105,23 @@ def settings( request ):
 
 @csrf_exempt
 def saveSettings( request ):
+    u = request.user
+    print u
+    u_profile = u.profile
+    print u_profile
+    # save minutes
     for d in daysOfWeek:
         assert d.upper() in request.POST
-        length = request.POST[d.upper()]
+        minutes = request.POST[d.upper()]
+        print minutes
+        print dir( u_profile )
+        print u_profile.monMin
+        u_profile.monMin = int(minutes)
+        print u_profile.monMin
+        print d.lower()[:3] + 'Min' + '= ' + minutes
+        u_profile.__setattr__( d.lower()[:3] + 'Min', int(minutes) )
+        print u_profile
+        '''
         numGoalPerDay = Goal.objects.filter( user=request.user).filter( day=d.upper() ).count()
         if numGoalPerDay == 0:
             goal = Goal()
@@ -120,6 +134,8 @@ def saveSettings( request ):
         else:
             assert 0, "wrong number of goals: %d" % numGoalPerDay
         goal.save()
+        '''
+    u_profile.save()
     return HttpResponse( "Success ")
 
 def register(request):

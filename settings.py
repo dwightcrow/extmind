@@ -22,7 +22,7 @@ DATABASES = {
 
 
 LOGIN_REDIRECT_URL = '/queue/'
-AUTH_PROFILE_MODULE = 'app.UserProfile'
+AUTH_PROFILE_MODULE = 'learn.UserProfile'
 LOGIN_URL = '/login/'
 
 

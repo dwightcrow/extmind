@@ -42,7 +42,7 @@ class UserProfile(models.Model):
     emailRemind = models.BooleanField( default=False )
     textRemind = models.BooleanField( default=False )
     phoneRemind = models.BooleanField( default=False )
-    timeOfRemind = models.TimeField()
+    timeOfRemind = models.TimeField( null=True ) 
     monMin = models.IntegerField( default=0 )
     tueMin = models.IntegerField( default=0 )
     wedMin = models.IntegerField( default=0 )
