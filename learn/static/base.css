@@ -23,9 +23,20 @@ color: #ffffff;
 text-decoration: none;
 }
 
+#alpha{
+float:left;
+background:#c42424;
+color:#fff;
+font-weight:700;
+padding:8px;
+margin: 5px 0 0 0;
+font-size:90%;
+line-height:1.0em;
+}
+
 .navigation{
 float:right;
-margin: 14px 20px 0 0;
+margin: 14px 0 0 0;
 font-size:90%;
 font-weight:700;
 line-height:1.0em;

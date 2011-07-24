@@ -36,12 +36,16 @@ def queue( request ):
                                context_instance=RequestContext(request) )
 
 def concepts( request ):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/login/')
     c = {}
     c['concepts'] = Concept.objects.filter( user=request.user ).exclude(text='').order_by('-date').all()
     return render_to_response( 'concepts.html', c,
                                context_instance=RequestContext(request) )
 
 def session( request ):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/login/')
     c = {}
     weekday = daysOfWeek[ datetime.date.today().weekday() ].upper()
     numGoalPerDay = Goal.objects.filter( user=request.user).filter( day=weekday ).count()
@@ -67,6 +71,8 @@ def session( request ):
                                context_instance=RequestContext(request) )
 @csrf_exempt
 def saveText( request, conceptId ):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/login/')
     concept = Concept.objects.get( id=conceptId )
     concept.text = request.POST['text']
     concept.date = datetime.datetime.now()
@@ -79,6 +85,8 @@ class wrapper():
         self.minutes = minutes
 
 def settings( request ):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/login/')
     c={}
     prevSettings = []
     for d in daysOfWeek:
