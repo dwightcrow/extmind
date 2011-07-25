@@ -22,6 +22,9 @@ DATABASES = {
 
 
 LOGIN_REDIRECT_URL = '/queue/'
+AUTH_PROFILE_MODULE = 'learn.UserProfile'
+LOGIN_URL = '/login/'
+
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -95,6 +98,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'learn',
+    'south',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
 )

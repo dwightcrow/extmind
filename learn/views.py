@@ -36,12 +36,16 @@ def queue( request ):
                                context_instance=RequestContext(request) )
 
 def concepts( request ):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/login/')
     c = {}
     c['concepts'] = Concept.objects.filter( user=request.user ).exclude(text='').order_by('-date').all()
     return render_to_response( 'concepts.html', c,
                                context_instance=RequestContext(request) )
 
 def session( request ):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/login/')
     c = {}
     weekday = daysOfWeek[ datetime.date.today().weekday() ].upper()
     numGoalPerDay = Goal.objects.filter( user=request.user).filter( day=weekday ).count()
@@ -67,6 +71,8 @@ def session( request ):
                                context_instance=RequestContext(request) )
 @csrf_exempt
 def saveText( request, conceptId ):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/login/')
     concept = Concept.objects.get( id=conceptId )
     concept.text = request.POST['text']
     concept.date = datetime.datetime.now()
@@ -79,6 +85,8 @@ class wrapper():
         self.minutes = minutes
 
 def settings( request ):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/login/')
     c={}
     prevSettings = []
     for d in daysOfWeek:
@@ -97,9 +105,23 @@ def settings( request ):
 
 @csrf_exempt
 def saveSettings( request ):
+    u = request.user
+    print u
+    u_profile = u.profile
+    print u_profile
+    # save minutes
     for d in daysOfWeek:
         assert d.upper() in request.POST
-        length = request.POST[d.upper()]
+        minutes = request.POST[d.upper()]
+        print minutes
+        print dir( u_profile )
+        print u_profile.monMin
+        u_profile.monMin = int(minutes)
+        print u_profile.monMin
+        print d.lower()[:3] + 'Min' + '= ' + minutes
+        u_profile.__setattr__( d.lower()[:3] + 'Min', int(minutes) )
+        print u_profile
+        '''
         numGoalPerDay = Goal.objects.filter( user=request.user).filter( day=d.upper() ).count()
         if numGoalPerDay == 0:
             goal = Goal()
@@ -112,6 +134,8 @@ def saveSettings( request ):
         else:
             assert 0, "wrong number of goals: %d" % numGoalPerDay
         goal.save()
+        '''
+    u_profile.save()
     return HttpResponse( "Success ")
 
 def register(request):

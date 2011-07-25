@@ -7,29 +7,46 @@
 
 {% block content %}
 
-<div id='calendarBlock'>
-	{% for d in prevSettings %}
-	<div class='perDaySetting'>
-	<div class='dayTitle'>{{d.day}}{{d.minutes}}</div>
-	<select id='{{d.day}}Select' class='lengthInput'>
-		<option value="0"  {%if d.minutes == '0' %}selected{%endif%}> --- </option>
-		<option value="15" {%if d.minutes == '15'%}selected{%endif%}>15 Minutes</option>
-    	<option value="30" {%if d.minutes == '30'%}selected{%endif%}>30 Minutes</option>
-		<option value="60" {%if d.minutes == '60'%}selected{%endif%}>60 Minutes</option>
-	</select>		
+<div class="title">Planned Growth Schedule</div>
+{% for d in prevSettings %}
+<div class='perDaySetting'>
+<div class='dayTitle'>{{d.day}}</div>
+<select id='{{d.day}}Select' class='lengthInput'>
+	<option value="0"  {%if d.minutes == '0' %}selected{%endif%}> --- </option>
+	<option value="15" {%if d.minutes == '15'%}selected{%endif%}>15 Minutes</option>
+	<option value="30" {%if d.minutes == '30'%}selected{%endif%}>30 Minutes</option>
+	<option value="60" {%if d.minutes == '60'%}selected{%endif%}>60 Minutes</option>
+</select>		
+</div>
+{%endfor%}
+
+<!-- reminder options -->
+<div class="title" style="font-size:120%; margin: 30px 0 15px 0;">Reminder Options</div>
+<div style='width:960px;'>
+	<div id="reminderType">
+	<div class='rLabel'>Email</div><input type="checkbox" name="reminder" value="EMAIL"  /><br />
+	<div class='rLabel'>Text</div><input type="checkbox" name="reminder" value="TEXT"  /><br />
+	<div class='rLabel'>Phone</div><input type="checkbox" name="reminder" value="PHONE"  /><br />
 	</div>
-	
-	{%endfor%}
-	<div>
-	<input type='button' id='saveButton' value='Save'/>
+	<div id='numberAndTime'>
+	<div id='suppliedNumber'>Supplied Number</div> <input type="tel" name="phoneNumber"/> </br>
 	</div>
+	<!-- expl -->
+	<div id='explanation'>
+	Reminders are sent out at 9pm PDT if you have scheduled work and not completed it.
+	Reminders can be opted out of at anytime, and are sent once to each of the options checked at right.	
+	</div>
+</div>
+<br><br><br><br> <!-- <-desperation at right :P -->
+<!-- save button -->
+<div>
+<input type='button' id='saveButton' value='Save'/>
 </div>
 
 	<!-- really need to start doing jquery buttons.... -->
 <script>
 $("#saveButton").click(function() {
   console.log( 'clicked Save');
-  //collect from active tab - ugly but dont know javascript metaprogramming yet...
   var postdata = "";
   {% for d in prevSettings %}
   postdata+= "&{{d.day}}=".toUpperCase() + $("#{{d.day}}Select").val();
@@ -42,6 +59,7 @@ $("#saveButton").click(function() {
     data: postdata,
     success: function(data) {
     	console.log( "Success!" );
+		window.location = '{% url learn.views.queue %}'
     },
     error: function(request, status, exception) {
     	alert(status + " " + exception);

@@ -2,7 +2,7 @@
 
 {% block headInclude %}
 <style type="text/css"> 
-.page_content{ width: 700px; margin:auto; border-radius:15px;}
+#reg_content{ width: 700px; margin:auto; border-radius:15px;}
 #loginform{ position:relative; top:20px; left:20px; float:left;}
 #logleft{ float:left; display:inline; width:400px;}
 #logright{float:left; display:inline; position:relative; top:25px;}
@@ -13,7 +13,7 @@ a{ text-decoration:none; color: #000;}
 
 {% block content %}
 
-<div class='page_content' style='height:150px;background:#fff; position:relative; top:20px;'>
+<div id='reg_content' style='height:150px;background:#fff; position:relative; top:20px;'>
 
 <div id='logleft'>
 <!--{% if form.errors %}
@@ -44,7 +44,7 @@ a{ text-decoration:none; color: #000;}
 
 </div>
 <div id='logright'>
-	<b>Not a member yet?</b> <a href="{% url learn.views.register %}">Register!</a>
+	<b>Not a member yet?</b> <a href="{% url learn.views.register %}" style='color:#6070dd;'>Register!</a>
 	
 </div>
 
