@@ -28,7 +28,7 @@ def queue( request ):
     if 'concept' in request.GET and request.GET['concept'] != '':
         newConcept = Concept()
         newConcept.name = request.GET['concept']
-        newConcept.user = User.objects.get(id=1)
+        newConcept.user = request.user
         newConcept.save()
         c['submittedConcept'] = request.GET['concept']
         c['showConcept'] = True
