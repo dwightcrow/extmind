@@ -19,6 +19,7 @@ font-weight:700;
 }
 
 #saveButton{
+float:left;
 margin:20px 0 0 0;
 font-size:105%;
 line-height:1.0em;

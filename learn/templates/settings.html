@@ -12,32 +12,41 @@
 <div class='perDaySetting'>
 <div class='dayTitle'>{{d.day}}</div>
 <select id='{{d.day}}Select' class='lengthInput'>
-	<option value="0"  {%if d.minutes == '0' %}selected{%endif%}> --- </option>
-	<option value="15" {%if d.minutes == '15'%}selected{%endif%}>15 Minutes</option>
-	<option value="30" {%if d.minutes == '30'%}selected{%endif%}>30 Minutes</option>
-	<option value="60" {%if d.minutes == '60'%}selected{%endif%}>60 Minutes</option>
+	<option value="0"  {%if d.minutes == 0  %}selected{%endif%}> --- </option>
+	<option value="15" {%if d.minutes == 15 %}selected{%endif%}>15 Minutes</option>
+	<option value="30" {%if d.minutes == 30 %}selected{%endif%}>30 Minutes</option>
+	<option value="60" {%if d.minutes == 60 %}selected{%endif%}>60 Minutes</option>
 </select>		
 </div>
 {%endfor%}
 
 <!-- reminder options -->
 <div class="title" style="font-size:120%; margin: 30px 0 15px 0;">Reminder Options</div>
-<div style='width:960px;'>
+<div style='width:960px; height:60px'>
 	<div id="reminderType">
-	<div class='rLabel'>Email</div><input type="checkbox" name="reminder" value="EMAIL"  /><br />
-	<div class='rLabel'>Text</div><input type="checkbox" name="reminder" value="TEXT"  /><br />
-	<div class='rLabel'>Phone</div><input type="checkbox" name="reminder" value="PHONE"  /><br />
+	<div class='rLabel'>Email</div>
+	<input type="checkbox" name="reminder" value="EMAIL" 
+		id='emailRemind' {%if emailRemind%}checked{%endif%}/><br/>
+	<div class='rLabel'>Text</div>
+	<input type="checkbox" name="reminder" value="TEXT"  
+		id='textRemind' {%if textRemind%}checked{%endif%}/><br/>
+	<div class='rLabel'>Phone</div>
+	<input type="checkbox" name="reminder" value="PHONE" 
+		id='phoneRemind' {%if phoneRemind%}checked{%endif%}/><br/>
 	</div>
 	<div id='numberAndTime'>
-	<div id='suppliedNumber'>Supplied Number</div> <input type="tel" name="phoneNumber"/> </br>
+	<div id='suppliedNumber'>Supplied Number</div> 
+	<input type="tel" name="phoneNumber" id='phoneNumber' value='{{phoneNumber}}'/></br>
 	</div>
 	<!-- expl -->
 	<div id='explanation'>
 	Reminders are sent out at 9pm PDT if you have scheduled work and not completed it.
-	Reminders can be opted out of at anytime, and are sent once to each of the options checked at right.	
+	Reminders can be opted out of at anytime, and are sent once to each of the options checked at right.
+	<br><br>
+	Please enter your number as '+1XXXYYYZZZZ' during alpha	
 	</div>
 </div>
-<br><br><br><br> <!-- <-desperation at right :P -->
+<br><!-- <-desperation at right :P -->
 <!-- save button -->
 <div>
 <input type='button' id='saveButton' value='Save'/>
@@ -51,6 +60,17 @@ $("#saveButton").click(function() {
   {% for d in prevSettings %}
   postdata+= "&{{d.day}}=".toUpperCase() + $("#{{d.day}}Select").val();
   {% endfor %}
+  // capture checkboxes and phone #
+  postdata+= "&emailRemind=" + ( $('#emailRemind:checked').val() != undefined )
+  postdata+= "&textRemind=" + ( $('#textRemind:checked').val() != undefined )
+  postdata+= "&phoneRemind=" + ( $('#phoneRemind:checked').val() != undefined )
+  postdata+= "&phoneNumber=" + encodeURIComponent( $('#phoneNumber').val() )
+  phoneNumber = $('#phoneNumber').val()
+  if( !phoneNumber.match(/\+1\d\d\d\d\d\d\d\d\d\d/) && !phoneNumber.match(/^$/) ){
+  	console.log( phoneNumber )
+  	alert( 'Phone number must be in +1XXXYYYZZZZ format during alpha. Please re-enter. Thanks!');
+  	return;
+  }
   console.log( postdata );
 
   $.ajax({

@@ -87,19 +87,20 @@ class wrapper():
 def settings( request ):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login/')
+    u_profile = request.user.profile
     c={}
-    prevSettings = []
-    for d in daysOfWeek:
-        numGoalPerDay = Goal.objects.filter( user=request.user).filter( day=d.upper() ).count()
-        if numGoalPerDay == 0:
-            prevSettings.append( wrapper(d,0) )
-        elif numGoalPerDay == 1:
-            goal = Goal.objects.filter( user=request.user).filter( day=d.upper() ).all()[0]
-            prevSettings.append( wrapper(d, goal.length) )
-        else:
-            assert 0, "wrong number of goals: %d" % numGoalPerDay
-    assert len( prevSettings ) == 7
+    prevSettings = [ wrapper('Monday', u_profile.monMin),
+                     wrapper('Tuesday', u_profile.tueMin),
+                     wrapper('Wednesday', u_profile.wedMin),
+                     wrapper('Thursday', u_profile.thuMin),
+                     wrapper('Friday', u_profile.friMin),
+                     wrapper('Saturday', u_profile.satMin),
+                     wrapper('Sunday', u_profile.sunMin), ]
     c['prevSettings'] = prevSettings
+    c['emailRemind'] = u_profile.emailRemind
+    c['textRemind'] = u_profile.textRemind
+    c['phoneRemind'] = u_profile.phoneRemind
+    c['phoneNumber'] = u_profile.phoneNumber
     return render_to_response( 'settings.html', c,
                                context_instance=RequestContext(request) )
 
@@ -121,20 +122,11 @@ def saveSettings( request ):
         print d.lower()[:3] + 'Min' + '= ' + minutes
         u_profile.__setattr__( d.lower()[:3] + 'Min', int(minutes) )
         print u_profile
-        '''
-        numGoalPerDay = Goal.objects.filter( user=request.user).filter( day=d.upper() ).count()
-        if numGoalPerDay == 0:
-            goal = Goal()
-            goal.day = d.upper()
-            goal.user = request.user
-            goal.length = int(length)
-        elif numGoalPerDay == 1:
-            goal = Goal.objects.filter( user=request.user).filter( day=d.upper() ).all()[0]
-            goal.length = int(length)
-        else:
-            assert 0, "wrong number of goals: %d" % numGoalPerDay
-        goal.save()
-        '''
+    # save reminders and phone number
+    u_profile.emailRemind = ( request.POST['emailRemind'] == 'true' )
+    u_profile.textRemind = ( request.POST['textRemind'] == 'true' )
+    u_profile.phoneRemind = ( request.POST['phoneRemind'] == 'true' )
+    u_profile.phoneNumber = ( request.POST['phoneNumber'] )
     u_profile.save()
     return HttpResponse( "Success ")
 

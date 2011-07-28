@@ -39,7 +39,8 @@ class Session( models.Model ):
     
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    emailRemind = models.BooleanField( default=False )
+    phoneNumber = models.TextField( default='' )
+    emailRemind = models.BooleanField( default=True )
     textRemind = models.BooleanField( default=False )
     phoneRemind = models.BooleanField( default=False )
     timeOfRemind = models.TimeField( null=True ) 
