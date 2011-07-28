@@ -149,3 +149,9 @@ def register(request):
 def logout(request):
     django_logout(request)
     return HttpResponseRedirect(reverse(queue))
+
+def phoneRemind(request):
+    c = {}
+    return render_to_response("phoneRemind", c, 
+                              context_instance=RequestContext(request))
+

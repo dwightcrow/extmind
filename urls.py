@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     (r'^register/$', 'learn.views.register'),
     (r'^login/$', 'django.contrib.auth.views.login'),
     (r'^logout/$', 'learn.views.logout'),
+    (r'^phoneRemind/$', 'learn.views.phoneRemind'),
     url(r'^admin/', include(admin.site.urls)),
 )
 
