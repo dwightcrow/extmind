@@ -8,8 +8,14 @@
 {% block content %}
 <div id='timer'></div>
 {%if noConcepts %}
-<br>
-You've completed all your scheduled conceptual growth!
+	{%if noConceptsDoneEither%}
+	<br><br>
+	When you've entered some target subjects or concepts you'd like to master, you can 
+	regularly time your progress and enter notes and information about these ideas here.
+	{%else%}
+	<br><br>
+	You've completed all your scheduled conceptual growth!
+	{%endif%}
 {%endif%}
 {% for c in concepts %}
 <div class='conceptBubble' id='conceptBubble{{c.id}}'>

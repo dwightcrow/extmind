@@ -7,6 +7,12 @@
 
 {% block content %}
 
+{%if noConcepts%}
+<br><br>
+Concepts stores your completed ideas from the Home page. 
+Fill in the ideas stored at Learn and manage them here.
+{%endif%}
+
 {% for c in concepts %}
 <div class='conceptBubbleFull'>
 	<div class='conceptBubbleLeft'>

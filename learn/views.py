@@ -40,6 +40,10 @@ def concepts( request ):
         return HttpResponseRedirect('/login/')
     c = {}
     c['concepts'] = Concept.objects.filter( user=request.user ).exclude(text='').order_by('-date').all()
+    if len( c['concepts'] ) == 0:
+        c['noConcepts'] = True
+    else:
+        c['noConcepts'] = False    
     return render_to_response( 'concepts.html', c,
                                context_instance=RequestContext(request) )
 
@@ -65,6 +69,8 @@ def session( request ):
         c['noConcepts'] = True
     else:
         c['noConcepts'] = False
+    if Concept.objects.filter( user=request.user ).exclude(text='').order_by('-date').count() == 0:
+        c['noConceptsDoneEither'] = True
     if len(c['concepts']) > 0:
         c['first'] = c['concepts'][0]
     return render_to_response( 'session.html', c,
